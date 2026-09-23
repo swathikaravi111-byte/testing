@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chronos — Sign In</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --gold: #c9a227;
+      --gold-dark: #a8861c;
+      --ink: #14161a;
+      --paper: #f7f5f1;
+    }
+
+    body {
+      font-family: "Georgia", "Times New Roman", serif;
+      background: var(--ink);
+      color: var(--paper);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .login-card {
+      background: linear-gradient(160deg, #1c1f25, #101216);
+      border: 1px solid rgba(201, 162, 39, 0.35);
+      border-radius: 14px;
+      padding: 48px 40px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .logo svg { width: 34px; height: 34px; }
+
+    .brand {
+      font-size: 26px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 4px;
+      text-align: center;
+    }
+
+    .tagline {
+      text-align: center;
+      font-size: 13px;
+      color: #9a9da6;
+      font-style: italic;
+      margin-bottom: 36px;
+    }
+
+    form { display: flex; flex-direction: column; gap: 18px; }
+
+    label {
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #9a9da6;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 13px 16px;
+      background: #0c0e11;
+      border: 1px solid #2b2f37;
+      border-radius: 8px;
+      color: var(--paper);
+      font-size: 15px;
+      font-family: inherit;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.15);
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+    }
+
+    .row label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-transform: none;
+      letter-spacing: 0;
+      color: #b9bcc4;
+      cursor: pointer;
+    }
+
+    .row a { color: var(--gold); text-decoration: none; }
+    .row a:hover { text-decoration: underline; }
+
+    .btn {
+      margin-top: 8px;
+      padding: 14px;
+      background: var(--gold);
+      color: var(--ink);
+      border: none;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 15px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn:hover { background: var(--gold-dark); }
+
+    .signup {
+      text-align: center;
+      margin-top: 28px;
+      font-size: 13px;
+      color: #9a9da6;
+    }
+
+    .signup a { color: var(--gold); text-decoration: none; }
+    .signup a:hover { text-decoration: underline; }
+
+    .error {
+      display: none;
+      color: #ff8a80;
+      font-size: 13px;
+      padding: 10px 14px;
+      background: rgba(255, 82, 82, 0.08);
+      border: 1px solid rgba(255, 82, 82, 0.3);
+      border-radius: 8px;
+    }
+
+    @media (max-width: 480px) {
+      .login-card { padding: 36px 24px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="login-card">
+    <div class="logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#c9a227" stroke-width="1.5">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M12 7v5l3.5 2" stroke-linecap="round" />
+        <path d="M12 3V1M12 23v-2M9 2h6M9 22h6" stroke-linecap="round" />
+      </svg>
+      <h1 class="brand">Chronos</h1>
+    </div>
+    <p class="tagline">Timeless watches, crafted to last</p>
+
+    <form id="login-form" novalidate>
+      <div class="error" id="form-error" role="alert"></div>
+
+      <div>
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email">
+      </div>
+
+      <div>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="••••••••" required minlength="8" autocomplete="current-password">
+      </div>
+
+      <div class="row">
+        <label>
+          <input type="checkbox" name="remember"> Remember me
+        </label>
+        <a href="#">Forgot password?</a>
+      </div>
+
+      <button type="submit" class="btn">Sign In</button>
+
+      <p class="signup">New to Chronos? <a href="#">Create an account</a></p>
+    </form>
+  </main>
+
+  <script>
+    const form = document.getElementById('login-form');
+    const errorBox = document.getElementById('form-error');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const email = form.email.value.trim();
+      const password = form.password.value;
+
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        errorBox.textContent = 'Please enter a valid email address.';
+        errorBox.style.display = 'block';
+        return;
+      }
+      if (password.length < 8) {
+        errorBox.textContent = 'Password must be at least 8 characters.';
+        errorBox.style.display = 'block';
+        return;
+      }
+
+      errorBox.style.display = 'none';
+      // TODO: send credentials to backend auth endpoint
+      alert('Signed in as ' + email);
+    });
+  </script>
+</body>
+</html>
