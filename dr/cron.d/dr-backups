@@ -1,0 +1,30 @@
+# Backup & DR cron schedule
+# Install: copy to /etc/cron.d/dr-backups or `crontab -e`
+
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+DR_ROOT=/home/user/testing/dr
+
+# Daily DB backup at 01:00
+0 1 * * * root "$DR_ROOT/bin/db-backup.sh" daily
+
+# Config backup at 01:30 daily
+30 1 * * * root "$DR_ROOT/bin/config-backup.sh"
+
+# Weekly full backup Sunday 02:00
+0 2 * * 0 root "$DR_ROOT/bin/db-backup.sh" weekly
+
+# Monthly archive 1st of month 03:00
+0 3 1 * * root "$DR_ROOT/bin/db-backup.sh" monthly
+
+# Backup verification 04:00 daily (checksum + structural + age)
+0 4 * * * root "$DR_ROOT/bin/verify-backup.sh"
+
+# Full restore validation every Sunday 05:00 (live scratch restore)
+0 5 * * 0 root "$DR_ROOT/restore/validate-restore.sh"
+
+# Monitoring every 15 min
+*/15 * * * * root "$DR_ROOT/bin/monitor-backups.sh"
+
+# Health summary (never alerts) every 6h
+0 */6 * * * root "$DR_ROOT/bin/health-check.sh"

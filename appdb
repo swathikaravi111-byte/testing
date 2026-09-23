@@ -1,0 +1,1 @@
+PGDMP-STUB 1790162361 -h localhost -p 5432 -U postgres --no-owner --no-privileges --format=custom appdb
