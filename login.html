@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="auth-wrapper">
+    <section class="auth-card" aria-labelledby="login-heading">
+      <h1 id="login-heading">Welcome back</h1>
+      <p class="auth-subtitle">Sign in to your account to continue</p>
+
+      <form id="login-form" novalidate>
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" autocomplete="email"
+                 placeholder="you@example.com" required />
+          <p class="field-error" id="email-error" role="alert" hidden></p>
+        </div>
+
+        <div class="field">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" autocomplete="current-password"
+                 placeholder="••••••••" required minlength="8" />
+          <button type="button" class="toggle-password" id="toggle-password"
+                  aria-label="Show password" aria-pressed="false">Show</button>
+          <p class="field-error" id="password-error" role="alert" hidden></p>
+        </div>
+
+        <div class="field-row">
+          <label class="checkbox">
+            <input type="checkbox" id="remember" name="remember" />
+            <span>Remember me</span>
+          </label>
+          <a href="#" class="forgot-link">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="submit-btn" id="submit-btn">Sign in</button>
+
+        <p class="form-message" id="form-message" role="status" hidden></p>
+      </form>
+
+      <p class="auth-footer">Don't have an account? <a href="#">Create one</a></p>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
