@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TimePiece Co. — Menu</title>
+  <style>
+    :root {
+      --gold: #c9a227;
+      --gold-light: #e6c65c;
+      --ink: #1a1a1a;
+      --bg: #0f0f10;
+      --card: #1a1a1c;
+      --muted: #a3a3a8;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: var(--bg);
+      color: #f5f5f7;
+      line-height: 1.6;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 2rem;
+      border-bottom: 1px solid #2a2a2d;
+      position: sticky;
+      top: 0;
+      background: rgba(15, 15, 16, 0.95);
+      backdrop-filter: blur(8px);
+      z-index: 10;
+    }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+    }
+    .logo span { color: var(--gold); }
+    nav ul {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+    nav a:hover, nav a.active { color: var(--gold-light); }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 4rem 1rem 3rem;
+      background:
+        radial-gradient(ellipse at top, rgba(201, 162, 39, 0.12), transparent 60%);
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .hero h1 em { color: var(--gold); font-style: normal; }
+    .hero p { color: var(--muted); margin-top: 0.75rem; letter-spacing: 0.05em; }
+
+    /* Menu grid */
+    .menu {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid #2a2a2d;
+      border-radius: 14px;
+      overflow: hidden;
+      transition: transform 0.25s, border-color 0.25s;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: var(--gold);
+    }
+    .card .icon {
+      height: 130px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.4rem;
+      background: linear-gradient(135deg, #232326, #141416);
+    }
+    .card .body { padding: 1.2rem 1.4rem 1.4rem; }
+    .card h2 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+    .card .price {
+      color: var(--gold);
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin: 0.3rem 0 0.6rem;
+    }
+    .card p { color: var(--muted); font-size: 0.9rem; }
+    .card a {
+      display: inline-block;
+      margin-top: 0.9rem;
+      padding: 0.5rem 1.2rem;
+      border: 1px solid var(--gold);
+      color: var(--gold-light);
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      transition: background 0.2s, color 0.2s;
+    }
+    .card a:hover { background: var(--gold); color: #141414; }
+
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      border-top: 1px solid #2a2a2d;
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.04em;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">TIMEPIECE<span>&nbsp;CO.</span></div>
+    <nav aria-label="Main navigation">
+      <ul>
+        <li><a href="#" class="active">Menu</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero" id="about">
+    <h1>Our <em>Collection</em></h1>
+    <p>Handpicked timepieces — from everyday classics to rare mechanical wonders.</p>
+  </section>
+
+  <main class="menu" id="contact">
+    <article class="card">
+      <div class="icon">⌚</div>
+      <div class="body">
+        <h2>Classic Leather</h2>
+        <div class="price">From $149</div>
+        <p>Timeless design with genuine leather straps and Swiss quartz movement.</p>
+        <a href="#">View Options</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="icon">🕰️</div>
+      <div class="body">
+        <h2>Automatic Luxury</h2>
+        <div class="price">From $899</div>
+        <p>Self-winding mechanical movements, sapphire crystal, exhibition caseback.</p>
+        <a href="#">View Options</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="icon">⌛</div>
+      <div class="body">
+        <h2>Sport Chronograph</h2>
+        <div class="price">From $329</div>
+        <p>Water-resistant to 200m with precision chronograph timing.</p>
+        <a href="#">View Options</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="icon">⌸</div>
+      <div class="body">
+        <h2>Smart Watches</h2>
+        <div class="price">From $249</div>
+        <p>Health tracking, notifications, and 7-day battery in a premium build.</p>
+        <a href="#">View Options</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="icon">⌚</div>
+      <div class="body">
+        <h2>Vintage Restored</h2>
+        <div class="price">From $499</div>
+        <p>Professionally restored timepieces from the 1950s–70s, one of a kind.</p>
+        <a href="#">View Options</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="icon">🎁</div>
+      <div class="body">
+        <h2>Gift Sets & Straps</h2>
+        <div class="price">From $39</div>
+        <p>Watch boxes, spare straps, and engraving services for every occasion.</p>
+        <a href="#">View Options</a>
+      </div>
+    </article>
+  </main>
+
+  <footer>
+    © 2025 TimePiece Co. — 42 Chronometer Lane · Open Mon–Sat, 9am–7pm
+  </footer>
+
+</body>
+</html>
