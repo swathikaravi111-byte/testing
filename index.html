@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TimePiece - Watch Shop</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">⏱️ TimePiece</div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#menu" class="nav-link">Menu</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Premium Watch Collection</h1>
+            <p>Discover timeless elegance and precision craftsmanship</p>
+            <button class="cta-btn" onclick="scrollToMenu()">Explore Our Menu</button>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="menu">
+        <div class="container">
+            <h2>Our Watch Collections</h2>
+            <p class="section-subtitle">Curated selections for every wrist</p>
+
+            <!-- Filter Buttons -->
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterMenu('all')">All</button>
+                <button class="filter-btn" onclick="filterMenu('luxury')">Luxury</button>
+                <button class="filter-btn" onclick="filterMenu('sports')">Sports</button>
+                <button class="filter-btn" onclick="filterMenu('casual')">Casual</button>
+                <button class="filter-btn" onclick="filterMenu('vintage')">Vintage</button>
+            </div>
+
+            <!-- Menu Grid -->
+            <div class="menu-grid">
+                <!-- Luxury Category -->
+                <div class="menu-item luxury" data-category="luxury">
+                    <div class="item-image">
+                        <img src="https://images.unsplash.com/photo-1523170535258-f875140269d1?w=300&h=300&fit=crop" alt="Rolex Submariner">
+                    </div>
+                    <h3>Rolex Submariner</h3>
+                    <p class="category-badge luxury-badge">Luxury</p>
+                    <p class="description">Swiss automatic diving watch with precision engineering</p>
+                    <p class="price">$14,500</p>
+                    <button class="add-btn" onclick="addToCart('Rolex Submariner', 14500)">Add to Cart</button>
+                </div>
+
+                <div class="menu-item luxury" data-category="luxury">
+                    <div class="item-image">
+                        <img src="https://images.unsplash.com/photo-1524592094714-0f3dd2f8e7ad?w=300&h=300&fit=crop" alt="Omega Seamaster">
+                    </div>
+                    <h3>Omega Seamaster</h3>
+                    <p class="category-badge luxury-badge">Luxury</p>
+                    <p class="description">Iconic professional dive watch with ceramic bezel</p>
+                    <p class="price">$12,000</p>
+                    <button class="add-btn" onclick="addToCart('Omega Seamaster', 12000)">Add to Cart</button>
+                </div>
+
+                <div class="menu-item luxury" data-category="luxury">
+                    <div class="item-image">
+                        <img src="https://images.unsplash.com/photo-1518611505868-d5b604d0c90d?w=300&h=300&fit=crop" alt="Patek Philippe">
+                    </div>
+                    <h3>Patek Philippe Nautilus</h3>
+                    <p class="category-badge luxury-badge">Luxury</p>
+                    <p class="description">Legendary perpetual calendar with sweep hand movement</p>
+                    <p class="price">$35,000</p>
+                    <button class="add-btn" onclick="addToCart('Patek Philippe Nautilus', 35000)">Add to Cart</button>
+                </div>
+
+                <!-- Sports Category -->
+                <div class="menu-item sports" data-category="sports">
+                    <div class="item-image">
+                        <img src="https://images.unsplash.com/photo-1552090014-d1a2b13e8ffd?w=300&h=300&fit=crop" alt="Garmin Fenix">
+                    </div>
+                    <h3>Garmin Fenix 7</h3>
+                    <p class="category-badge sports-badge">Sports</p>
+                    <p class="description">Multi-GNSS smartwatch for outdoor adventures</p>
+                    <p class="price">$699</p>
+                    <button class="add-btn" onclick="addToCart('Garmin Fenix 7', 699)">Add to Cart</button>
+                </div>
+
+                <div class="menu-item sports" data-category="sports">
+                    <div class="item-image">
+                        <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300&h=300&fit=crop" alt="Apple Watch Series 9">
+                    </div>
+                    <h3>Apple Watch Series 9</h3>
+                    <p class="category-badge sports-badge">Sports</p>
+                    <p class="description">Advanced fitness tracking with always-on retina display</p>
+                    <p class="price">$429</p>
+                    <button class="add-btn" onclick="addToCart('Apple Watch Series 9', 429)">Add to Cart</button>
+                </div>
+
+                <div class="menu-item sports" data-category="sports">
+                    <div class="item-image">
+                        <img src="https://images.unsplash.com/photo-1506157786151-b8491531f063?w=300&h=300&fit=crop" alt="Suunto Core">
+                    </div>
+                    <h3>Suunto Core</h3>
+                    <p class="category-badge sports-badge">Sports</p>
+                    <p class="description">Rugged outdoor sports watch with altimeter and compass</p>
+                    <p class="price">$299</p>
+                    <button class="add-btn" onclick="addToCart('Suunto Core', 299)">Add to Cart</button>
+                </div>
+
+                <!-- Casual Category -->
+                <div class="menu-item casual" data-category="casual">
+                    <div class="item-image">
+                        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300&h=300&fit=crop" alt="Minimalist Leather">
+                    </div>
+                    <h3>Minimalist Leather Watch</h3>
+                    <p class="category-badge casual-badge">Casual</p>
+                    <p class="description">Sleek design with genuine leather strap</p>
+                    <p class="price">$149</p>
+                    <button class="add-btn" onclick="addToCart('Minimalist Leather Watch', 149)">Add to Cart</button>
+                </div>
+
+                <div class="menu-item casual" data-category="casual">
+                    <div class="item-image">
+                        <img src="https://images.unsplash.com/photo-1531298828689-3154d3df40ee?w=300&h=300&fit=crop" alt="Classic White Face">
+                    </div>
+                    <h3>Classic White Face</h3>
+                    <p class="category-badge casual-badge">Casual</p>
+                    <p class="description">Timeless white dial with stainless steel case</p>
+                    <p class="price">$179</p>
+                    <button class="add-btn" onclick="addToCart('Classic White Face', 179)">Add to Cart</button>
+                </div>
+
+                <div class="menu-item casual" data-category="casual">
+                    <div class="item-image">
+                        <img src="https://images.unsplash.com/photo-1594943315292-1a46d440b825?w=300&h=300&fit=crop" alt="Colorful Sport">
+                    </div>
+                    <h3>Colorful Sport Watch</h3>
+                    <p class="category-badge casual-badge">Casual</p>
+                    <p class="description">Vibrant silicone strap with bold dial colors</p>
+                    <p class="price">$99</p>
+                    <button class="add-btn" onclick="addToCart('Colorful Sport Watch', 99)">Add to Cart</button>
+                </div>
+
+                <!-- Vintage Category -->
+                <div class="menu-item vintage" data-category="vintage">
+                    <div class="item-image">
+                        <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=300&h=300&fit=crop" alt="Vintage Seiko">
+                    </div>
+                    <h3>Vintage Seiko</h3>
+                    <p class="category-badge vintage-badge">Vintage</p>
+                    <p class="description">Authentic 1970s Japanese chronograph in excellent condition</p>
+                    <p class="price">$2,500</p>
+                    <button class="add-btn" onclick="addToCart('Vintage Seiko', 2500)">Add to Cart</button>
+                </div>
+
+                <div class="menu-item vintage" data-category="vintage">
+                    <div class="item-image">
+                        <img src="https://images.unsplash.com/photo-1569495282881-39befe1ba9e7?w=300&h=300&fit=crop" alt="Retro Omega">
+                    </div>
+                    <h3>Retro Omega Speedmaster</h3>
+                    <p class="category-badge vintage-badge">Vintage</p>
+                    <p class="description">Classic 1960s moonwatch with original paperwork</p>
+                    <p class="price">$8,500</p>
+                    <button class="add-btn" onclick="addToCart('Retro Omega Speedmaster', 8500)">Add to Cart</button>
+                </div>
+
+                <div class="menu-item vintage" data-category="vintage">
+                    <div class="item-image">
+                        <img src="https://images.unsplash.com/photo-1508002366257-74d440642117?w=300&h=300&fit=crop" alt="Vintage Timex">
+                    </div>
+                    <h3>Vintage Timex Military</h3>
+                    <p class="category-badge vintage-badge">Vintage</p>
+                    <p class="description">Authentic 1980s military issue with tritium dial</p>
+                    <p class="price">$450</p>
+                    <button class="add-btn" onclick="addToCart('Vintage Timex Military', 450)">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2>About TimePiece</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Welcome to TimePiece, your premier destination for luxury and everyday watches. With over 20 years of expertise, we curate the finest timepieces from around the world.</p>
+                    <p>Whether you're seeking a luxury investment piece, a reliable sports watch, or a casual everyday accessory, our collection offers something for every connoisseur.</p>
+                    <ul class="features">
+                        <li>✓ Authentic & Verified</li>
+                        <li>✓ Expert Authentication</li>
+                        <li>✓ Lifetime Support</li>
+                        <li>✓ Free Shipping on Orders Over $500</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Get In Touch</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <h3>📍 Location</h3>
+                        <p>123 Watch Street, Luxury Plaza<br>New York, NY 10001</p>
+                    </div>
+                    <div class="contact-item">
+                        <h3>📞 Phone</h3>
+                        <p>+1 (555) 123-4567</p>
+                    </div>
+                    <div class="contact-item">
+                        <h3>✉️ Email</h3>
+                        <p>hello@timepiece.shop</p>
+                    </div>
+                    <div class="contact-item">
+                        <h3>🕐 Hours</h3>
+                        <p>Mon-Fri: 10AM - 8PM<br>Sat-Sun: 11AM - 6PM</p>
+                    </div>
+                </div>
+                <form class="contact-form" onsubmit="handleSubmit(event)">
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Your Email" required>
+                    <textarea placeholder="Your Message" rows="5" required></textarea>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shopping Cart Modal -->
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeCart()">&times;</span>
+            <h2>Shopping Cart</h2>
+            <div id="cartItems" class="cart-items"></div>
+            <div class="cart-summary">
+                <p>Subtotal: <span id="subtotal">$0</span></p>
+                <p>Tax (8%): <span id="tax">$0</span></p>
+                <h3>Total: <span id="total">$0</span></h3>
+            </div>
+            <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+            <button class="close-btn" onclick="closeCart()">Continue Shopping</button>
+        </div>
+    </div>
+
+    <!-- Cart Floating Button -->
+    <button id="cartBtn" class="floating-cart-btn" onclick="openCart()">
+        🛒 <span id="cartCount">0</span>
+    </button>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 TimePiece Watch Shop. All rights reserved.</p>
+        <p>Crafted with ⏱️ for watch enthusiasts</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
