@@ -100,9 +100,10 @@ ABOUT_TEMPLATE = """
         </div>
 
         <footer>
-            <p>&copy; 2025 Our Company. All rights reserved.</p>
+            <p>&copy; <span id="year">2025</span> Our Company. All rights reserved.</p>
         </footer>
     </div>
+    <script src="/static/about.js"></script>
 </body>
 </html>
 """
