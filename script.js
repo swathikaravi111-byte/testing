@@ -1,166 +1,163 @@
-// Initialize the about page with interactive features
-document.addEventListener('DOMContentLoaded', () => {
+/**
+ * About Page JavaScript
+ * Handles interactivity and animations for the about page
+ */
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize all features
     initializeNavigation();
+    initializeScrollAnimations();
     initializeValueCards();
     initializeStatistics();
     initializeContactButton();
-    initializeScrollAnimations();
 });
 
 /**
- * Initialize navigation functionality
+ * Navigation functionality
  */
 function initializeNavigation() {
     const navLinks = document.querySelectorAll('.nav-links a');
     
     navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
+        link.addEventListener('click', function(e) {
+            // Remove active class from all links
             navLinks.forEach(l => l.classList.remove('active'));
-            e.target.classList.add('active');
+            // Add active class to clicked link
+            this.classList.add('active');
         });
     });
-
-    // Update active link on scroll
-    window.addEventListener('scroll', () => {
-        updateActiveNavLink();
-    });
 }
 
 /**
- * Update active navigation link based on scroll position
+ * Scroll-based animations
  */
-function updateActiveNavLink() {
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-links a');
-    
-    let currentSection = '';
-    
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        
-        if (window.scrollY >= sectionTop - 200) {
-            currentSection = section.getAttribute('id');
-        }
-    });
+function initializeScrollAnimations() {
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
 
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href').includes(currentSection)) {
-            link.classList.add('active');
-        }
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-in');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    // Observe team members and stats
+    document.querySelectorAll('.team-member, .stat, .value-card').forEach(el => {
+        observer.observe(el);
     });
 }
 
 /**
- * Initialize value cards with hover and click effects
+ * Add interactivity to value cards
  */
 function initializeValueCards() {
     const valueCards = document.querySelectorAll('.value-card');
     
     valueCards.forEach(card => {
-        card.addEventListener('mouseenter', () => {
-            card.style.animation = 'pulse 0.5s ease-out';
+        // Add hover effect
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-10px)';
+            this.style.boxShadow = '0 10px 25px rgba(37, 99, 235, 0.2)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+            this.style.boxShadow = 'none';
         });
 
-        card.addEventListener('click', () => {
-            const valueName = card.getAttribute('data-value');
-            showValueDetail(valueName);
+        // Add click feedback
+        card.addEventListener('click', function() {
+            const value = this.getAttribute('data-value');
+            console.log(`Selected value: ${value}`);
+            showValueDetail(value);
         });
     });
 }
 
 /**
- * Show detailed information about a value
+ * Show value card details (can be extended with modal or tooltip)
  */
-function showValueDetail(valueName) {
-    const valueNames = {
-        integrity: 'Integrity is the foundation of our business. We believe in being honest and transparent with our customers and team members at all times.',
-        innovation: 'We constantly explore new ideas and technologies to improve our products and services.',
-        excellence: 'Every detail matters. We maintain high standards in all aspects of our work.',
-        teamwork: 'We accomplish more together. Our success is built on collaboration and mutual respect.'
+function showValueDetail(value) {
+    const details = {
+        integrity: 'We operate with honesty and transparency in all our dealings, building trust with our customers and partners.',
+        innovation: 'We embrace creativity and continuously improve our offerings to stay ahead of the curve.',
+        excellence: 'We strive for the highest quality in everything we do, never compromising on standards.',
+        teamwork: 'We believe in collaboration and mutual support, knowing that together we achieve more.'
     };
-
-    const message = valueNames[valueName] || 'Thank you for your interest in our values!';
-    console.log(`Value: ${valueName} - ${message}`);
     
-    // Optional: Show a toast notification
-    showNotification(`${valueName.toUpperCase()}: ${message}`);
+    alert(`${value.charAt(0).toUpperCase() + value.slice(1)}: ${details[value]}`);
 }
 
 /**
- * Initialize statistics with counter animation
+ * Animate statistics on scroll
  */
 function initializeStatistics() {
-    const stats = document.querySelectorAll('.stat');
-    let hasAnimated = false;
-
-    const observerOptions = {
-        threshold: 0.5
-    };
-
-    const observer = new IntersectionObserver((entries) => {
+    const stats = document.querySelectorAll('.stat-number');
+    let statsAnimated = false;
+    
+    const statsObserver = new IntersectionObserver(function(entries) {
         entries.forEach(entry => {
-            if (entry.isIntersecting && !hasAnimated) {
-                hasAnimated = true;
-                animateStats();
+            if (entry.isIntersecting && !statsAnimated) {
+                statsAnimated = true;
+                stats.forEach(stat => {
+                    animateCounter(stat);
+                });
+                statsObserver.unobserve(entry.target);
             }
         });
-    }, observerOptions);
+    }, { threshold: 0.5 });
 
-    stats.forEach(stat => observer.observe(stat));
+    // Observe the stats section
+    const statsSection = document.querySelector('.stats-section');
+    if (statsSection) {
+        statsObserver.observe(statsSection);
+    }
 }
 
 /**
- * Animate statistics counters
+ * Animate counter from 0 to target number
  */
-function animateStats() {
-    const stats = document.querySelectorAll('.stat-number');
-    
-    stats.forEach(stat => {
-        const text = stat.textContent;
-        const number = parseInt(text.replace(/\D/g, ''));
-        const suffix = text.replace(/[0-9]/g, '');
-        
-        animateCounter(stat, number, suffix);
-    });
-}
+function animateCounter(element) {
+    const target = parseInt(element.textContent);
+    const duration = 1500;
+    const increment = target / (duration / 16); // 16ms per frame (60fps)
+    let current = 0;
 
-/**
- * Animate a counter from 0 to target number
- */
-function animateCounter(element, targetNumber, suffix) {
-    let currentNumber = 0;
-    const increment = Math.ceil(targetNumber / 50);
-    const interval = setInterval(() => {
-        currentNumber += increment;
-        
-        if (currentNumber >= targetNumber) {
-            currentNumber = targetNumber;
-            clearInterval(interval);
+    const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+            element.textContent = element.textContent; // Keep original format
+            clearInterval(timer);
+        } else {
+            const numericValue = Math.floor(current);
+            element.textContent = element.textContent.replace(/\d+/g, numericValue);
         }
-        
-        element.textContent = currentNumber + suffix;
-    }, 30);
+    }, 16);
 }
 
 /**
- * Initialize contact button
+ * Contact button functionality
  */
 function initializeContactButton() {
     const contactBtn = document.getElementById('contactBtn');
     
     if (contactBtn) {
-        contactBtn.addEventListener('click', () => {
-            handleContactClick();
+        contactBtn.addEventListener('click', function() {
+            handleContactButtonClick();
         });
 
-        contactBtn.addEventListener('mouseover', () => {
-            contactBtn.style.transform = 'scale(1.05)';
+        // Add hover effect
+        contactBtn.addEventListener('mouseenter', function() {
+            this.style.transform = 'scale(1.05)';
         });
 
-        contactBtn.addEventListener('mouseout', () => {
-            contactBtn.style.transform = 'scale(1)';
+        contactBtn.addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1)';
         });
     }
 }
@@ -168,136 +165,31 @@ function initializeContactButton() {
 /**
  * Handle contact button click
  */
-function handleContactClick() {
-    const email = 'contact@myapp.com';
-    showNotification(`Thank you for your interest! Please email us at ${email}`);
-    
-    // In a real application, you might navigate to a contact form
-    console.log('Contact form would be displayed here');
+function handleContactButtonClick() {
+    const message = 'Thank you for your interest! We will contact you soon.';
+    console.log(message);
+    alert(message);
+    // You can replace this with a modal or form submission
 }
 
 /**
- * Initialize scroll animations for elements
- */
-function initializeScrollAnimations() {
-    const elements = document.querySelectorAll('.section, .value-card, .team-member');
-    
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.animation = 'fadeIn 0.6s ease-out forwards';
-                observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
-
-    elements.forEach(element => observer.observe(element));
-}
-
-/**
- * Show a notification/toast message
- */
-function showNotification(message) {
-    // Create notification element
-    const notification = document.createElement('div');
-    notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background-color: #2563eb;
-        color: white;
-        padding: 1rem 1.5rem;
-        border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        animation: slideInRight 0.3s ease-out;
-        z-index: 1000;
-        max-width: 400px;
-        word-wrap: break-word;
-    `;
-    
-    notification.textContent = message;
-    document.body.appendChild(notification);
-
-    // Remove after 3 seconds
-    setTimeout(() => {
-        notification.style.animation = 'slideOutRight 0.3s ease-out';
-        setTimeout(() => notification.remove(), 300);
-    }, 3000);
-}
-
-/**
- * Smooth scroll to section
+ * Utility: Smooth scroll to section
  */
 function scrollToSection(sectionId) {
     const section = document.getElementById(sectionId);
     if (section) {
-        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        section.scrollIntoView({ behavior: 'smooth' });
     }
 }
 
 /**
- * Get page statistics
+ * Utility: Log page analytics (for tracking)
  */
-function getPageStats() {
-    return {
-        totalSections: document.querySelectorAll('section').length,
-        totalCards: document.querySelectorAll('.value-card').length,
-        totalTeamMembers: document.querySelectorAll('.team-member').length,
-        pageTitle: document.title,
-        currentUrl: window.location.href
-    };
+function logPageAnalytics() {
+    console.log('About page loaded');
+    console.log('User agent:', navigator.userAgent);
+    console.log('Timestamp:', new Date().toISOString());
 }
 
-// Export functions for external use if needed
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = {
-        scrollToSection,
-        getPageStats,
-        showNotification
-    };
-}
-
-// Add CSS animations dynamically
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes slideInRight {
-        from {
-            opacity: 0;
-            transform: translateX(100%);
-        }
-        to {
-            opacity: 1;
-            transform: translateX(0);
-        }
-    }
-
-    @keyframes slideOutRight {
-        from {
-            opacity: 1;
-            transform: translateX(0);
-        }
-        to {
-            opacity: 0;
-            transform: translateX(100%);
-        }
-    }
-
-    @keyframes pulse {
-        0%, 100% {
-            transform: scale(1);
-        }
-        50% {
-            transform: scale(1.05);
-        }
-    }
-`;
-document.head.appendChild(style);
-
-// Log initialization
-console.log('About page initialized successfully');
-console.log('Page stats:', getPageStats());
+// Log analytics on page load
+logPageAnalytics();
