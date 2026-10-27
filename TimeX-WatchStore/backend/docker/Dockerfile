@@ -1,0 +1,27 @@
+# Build stage
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+
+COPY ["TimeX.API/TimeX.API.csproj", "TimeX.API/"]
+COPY ["TimeX.Data/TimeX.Data.csproj", "TimeX.Data/"]
+COPY ["TimeX.Business/TimeX.Business.csproj", "TimeX.Business/"]
+
+RUN dotnet restore "TimeX.API/TimeX.API.csproj"
+
+COPY . .
+WORKDIR "/src/TimeX.API"
+
+RUN dotnet build "TimeX.API.csproj" -c Release -o /app/build
+RUN dotnet publish "TimeX.API.csproj" -c Release -o /app/publish /p:UseAppHost=false
+
+# Runtime stage
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
+WORKDIR /app
+
+COPY --from=build /app/publish .
+
+EXPOSE 8080
+
+ENV ASPNETCORE_URLS=http://+:8080
+
+ENTRYPOINT ["dotnet", "TimeX.API.dll"]
