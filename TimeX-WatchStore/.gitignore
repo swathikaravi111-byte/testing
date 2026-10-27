@@ -1,0 +1,41 @@
+# Backend
+backend/bin/
+backend/obj/
+backend/.vs/
+backend/.vscode/
+backend/*.user
+backend/*.suo
+backend/appsettings.local.json
+
+# Frontend
+frontend/node_modules/
+frontend/.env.local
+frontend/.env.*.local
+frontend/dist/
+frontend/build/
+frontend/.next/
+frontend/out/
+
+# General
+.DS_Store
+*.log
+.env
+.env.local
+.env.*.local
+
+# Docker
+docker-compose.override.yml
+
+# IDE
+.idea/
+*.swp
+*.swo
+*~
+.vscode/
+
+# Testing
+coverage/
+.nyc_output/
+
+# OS
+Thumbs.db

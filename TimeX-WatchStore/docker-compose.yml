@@ -1,0 +1,79 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: timex-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: TimeXDB
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - timex-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: ./backend
+      dockerfile: docker/Dockerfile
+    container_name: timex-api
+    environment:
+      ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=TimeXDB;Username=postgres;Password=postgres"
+      JwtSettings__Secret: "your-super-secret-key-that-is-very-long-and-secure-minimum-256-bits-required"
+      JwtSettings__Issuer: "TimeX.API"
+      JwtSettings__Audience: "TimeX.Web"
+      ASPNETCORE_ENVIRONMENT: "Production"
+    ports:
+      - "5000:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - timex-network
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: docker/Dockerfile
+      args:
+        VITE_API_URL: "http://localhost:5000/api"
+    container_name: timex-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - api
+    networks:
+      - timex-network
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:alpine
+    container_name: timex-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - api
+      - frontend
+    networks:
+      - timex-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+networks:
+  timex-network:
+    driver: bridge
